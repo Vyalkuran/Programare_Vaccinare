@@ -7,14 +7,65 @@
 <nav th:replace="layouts :: navbar"></nav>
 <p>Hello Programare!</p>
 
-<form th:action="@{/profile/save}" th:object="${beneficiar}" method="POST">
+<form th:action="@{/programare/save}" th:object="${programare}" method="POST">
   <div class="form-group">
-    <label for="nume">Nume:</label>
-    <input type="text" th:field="*{nume}"  id="nume" class="form-control"/>
+    <label for="datetime">Data programarii:</label>
+    <input type="datetime-local" th:field="${dataProgramare}" id="datetime">
+  </div>
+  <div class="form-group">
+    <label for="oras">Oras:</label>
+    <select th:field="${orase}" name="oras" id="oras" onchange="centreVaccinareAjax()">
+      <option value="0">Select</option>
+      <option th:each="oras : ${orase}" th:value="${oras.getId()}" th:text="${oras.getDenumire_oras()}">
+      </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="centre">Centru Vaccinare:</label>
+    <select name="centre" id="centre" th:field="*{id_centru}">
+      <option value="0">
+        Selectati intai un oras
+      </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="beneficiar">Beneficiar:</label>
+    <select th:field="${beneficiari}" name="beneficiar" id="beneficiar">
+      <option value="0">Select</option>
+      <option th:each="beneficiar : ${beneficiari}" th:value="${beneficiar.getId()}" th:text="${beneficiar.nume} + ' ' + ${beneficiar.prenume}">
+      </option>
+    </select>
   </div>
 
   <button type="submit" class="btn btn-success">Submit</button>
 
 </form>
+
+<script>
+  function centreVaccinareAjax (){
+    var orasSelectatId = $("#oras option:selected").val();
+    $.ajax({
+      url: "http://localhost:8080/api/centruVaccinareByIdOras/"+orasSelectatId,
+      type: "get",
+      success: function (response){
+        $("#centre").empty();
+        $("#centre").append($('<option>', {
+          value: 0,
+          text:  'Select'
+        }));
+        for (item in response){
+          $("#centre").append($('<option>', {
+            value: response[item].id,
+            text: response[item].denumire_centru_vaccinare
+          }));
+        }
+      },
+      error: function (e){
+        console.log("nu merge");
+      }
+    })
+  }
+
+</script>
 </body>
 </html>

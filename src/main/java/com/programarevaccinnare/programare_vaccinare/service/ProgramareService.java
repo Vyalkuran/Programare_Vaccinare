@@ -4,6 +4,8 @@ import com.programarevaccinnare.programare_vaccinare.entity.Programare;
 
 public interface ProgramareService {
 
+    public void save(Programare programare);
+
     public Programare findProgramareById_beneficiar(int id_beneficiar);
 
 }
