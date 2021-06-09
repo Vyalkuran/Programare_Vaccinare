@@ -63,6 +63,7 @@ public class ProfileController {
         Authentication authentication = authenticationFacade.getAuthentication();
         Utilizator u = utilizatorService.findUtilizatorByEmail(authentication.getName());
         beneficiar.setId_utilizator(u.getId());
+        beneficiar.setEmail(u.getEmail());
         beneficiarService.save(beneficiar);
         Autoritate autoritate = new Autoritate(u.getId(), "PROFIL_CREAT");
         autoritateService.save(autoritate);
