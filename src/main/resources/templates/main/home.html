@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layouts :: header">
+    <title>Home page</title>
+  </head>
+  <body>
+  <nav th:replace="layouts :: navbar"></nav>
+  <p th:each="beneficiar : ${beneficiari}">
+    <span th:text="${beneficiar.nume}"></span>
+    <br/>
+    <span th:text="${beneficiar.prenume}"></span>
+    <br/>
+    <span th:text="${beneficiar.cnp}"></span>
+  </p>
+  </body>
+</html>

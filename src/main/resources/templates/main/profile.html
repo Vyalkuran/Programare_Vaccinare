@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: header">
+  <title>Home page</title>
+</head>
+<body>
+  <nav th:replace="layouts :: navbar"></nav>
+  <p>Hello Profile!</p>
+
+  <form th:action="@{/profile/save}" th:object="${beneficiar}" method="POST">
+    <div class="form-group">
+      <label for="nume">Nume:</label>
+      <input type="text" th:field="*{nume}"  id="nume" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label for="prenume">Prenume:</label>
+      <input type="text" th:field="*{prenume}" id="prenume" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label for="cnp">CNP:</label>
+      <input type="text" th:field="*{cnp}" id="cnp" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label for="serie">Serie:</label>
+      <input type="text" th:field="*{serie}" id="serie" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label for="numar_serie">Nume:</label>
+      <input type="text" th:field="*{numar_serie}" id="numar_serie" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label for="judete">Judet:</label>
+      <select th:field="${judetSelectat}" name="judete" id="judete" onchange="oraseAjax()">
+        <option value="0">Select</option>
+        <option th:each="judet : ${judete}" th:value="${judet.getId()}" th:text="${judet.getDenumire_judet()}">
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="orase">Oras:</label>
+      <select name="orase" id="orase" th:field="*{id_oras}">
+        <option value="0">
+          Selectati intai un judet
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="text" th:field="*{email}" id="email" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label for="numar_telefon">Numar telefon:</label>
+      <input type="text" th:field="*{numar_telefon}" id="numar_telefon" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label for="grupa_risc_selectata">Grupa risc:</label>
+      <select th:field="*{id_grupa_risc}" id="grupa_risc_selectata">
+        <option th:each="grupaRisc : ${grupeRisc}" th:value="${grupaRisc.getId()}" th:text="${grupaRisc.getDenumire_grupa_risc()}">
+        </option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+
+  </form>
+  <script>
+    function oraseAjax (){
+      var judetSelectatId = $("#judete option:selected").val();
+      $.ajax({
+        url: "http://localhost:8080/api/oraseByJudet/"+judetSelectatId,
+        type: "get",
+        success: function (response){
+          $("#orase").empty();
+          $("#orase").append($('<option>', {
+            value: 0,
+            text:  'Select'
+          }));
+          for (item in response){
+            $("#orase").append($('<option>', {
+              value: response[item].id,
+              text: response[item].denumire_oras
+            }));
+          }
+        },
+        error: function (e){
+          console.log("nu merge");
+        }
+      })
+    }
+
+  </script>
+  </body>
+</html>
