@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: header">
+  <title>Home page</title>
+</head>
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<p>Hello Programare!</p>
+
+<form th:action="@{/profile/save}" th:object="${beneficiar}" method="POST">
+  <div class="form-group">
+    <label for="nume">Nume:</label>
+    <input type="text" th:field="*{nume}"  id="nume" class="form-control"/>
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+
+</form>
+</body>
+</html>
