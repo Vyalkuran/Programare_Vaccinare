@@ -6,8 +6,22 @@
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 <p>Hello Vizualizare beneficiari!</p>
-<div style="display: block; margin-bottom: 20px; padding: 20px">
-
+<div style="display: block; margin-bottom: 20px; padding: 20px" th:each="beneficiar : ${beneficiari}">
+  <p th:text="${#ids.seq('')}"></p>
+  <p th:text="${beneficiar.nume}"></p>
+  <p th:text="${beneficiar.prenume}"></p>
+  <p th:text="${beneficiar.cnp}"></p>
+  <div th:each="programare : ${programari}">
+    <p th:text="${#calendars.format(programare?.data_programare, 'dd-MM-yyyy HH:mm')}" th:if="${programare?.id_beneficiar} == ${beneficiar?.id}"></p>
+    <div th:each="centru_vaccinare : ${centre_vaccinare}">
+      <p th:text="${centru_vaccinare?.denumire_centru_vaccinare}" th:if="${centru_vaccinare?.id} == ${programare?.id_centru} and ${programare?.id_beneficiar} == ${beneficiar?.id}"></p>
+      <div th:each="oras : ${orase}">
+        <p th:text="${oras.denumire_oras}" th:if="${centru_vaccinare?.id_oras} == ${oras.id} and ${centru_vaccinare?.id} == ${programare?.id_centru} and ${centru_vaccinare?.id} == ${programare?.id_centru} and ${programare?.id_beneficiar} == ${beneficiar?.id} "></p>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
 </div>
 </body>
 </html>

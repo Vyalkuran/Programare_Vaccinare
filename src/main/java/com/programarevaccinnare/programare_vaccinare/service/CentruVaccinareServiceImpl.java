@@ -14,6 +14,11 @@ public class CentruVaccinareServiceImpl implements CentruVaccinareService{
     CentruVaccinareRepository centruVaccinareRepository;
 
     @Override
+    public List<CentruVaccinare> findAll() {
+        return centruVaccinareRepository.findAll();
+    }
+
+    @Override
     public List<CentruVaccinare> findCentruVaccinareById_oras(int id_oras) {
         return centruVaccinareRepository.findCentruVaccinareById_oras(id_oras);
     }
