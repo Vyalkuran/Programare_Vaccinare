@@ -2,6 +2,8 @@ package com.programarevaccinnare.programare_vaccinare.controller;
 
 import com.programarevaccinnare.programare_vaccinare.entity.*;
 import com.programarevaccinnare.programare_vaccinare.facade.AuthenticationFacade;
+import com.programarevaccinnare.programare_vaccinare.repository.GrupaRiscRepository;
+import com.programarevaccinnare.programare_vaccinare.repository.JudetRepository;
 import com.programarevaccinnare.programare_vaccinare.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,6 +37,12 @@ public class BeneficiarController {
     @Autowired
     OrasService orasService;
 
+    @Autowired
+    JudetRepository judetRepository;
+
+    @Autowired
+    GrupaRiscRepository grupaRiscRepository;
+
     @GetMapping("/beneficiari")
     public String vizualizareBeneficiari(Model model){
         Authentication authentication = authenticationFacade.getAuthentication();
@@ -58,13 +66,25 @@ public class BeneficiarController {
 
     @GetMapping("/beneficiari/adaugare")
     public String adaugareBeneficiar(Model model){
+        List<Judet> judete = judetRepository.findAll();
+        List<GrupaRisc> grupeRisc = grupaRiscRepository.findAll();
         Beneficiar beneficiar = new Beneficiar();
+        Judet judetSelectat = new Judet();
         model.addAttribute("beneficiar", beneficiar);
+        model.addAttribute("judetSelectat", judetSelectat);
+        model.addAttribute("judete", judete);
+        model.addAttribute("grupeRisc", grupeRisc);
+
         return "main/adaugare";
     }
 
     @PostMapping("/beneficiari/adaugare/save")
-    public String createNewBeneficiar(){
-        return null;
+    public String createNewBeneficiar(Beneficiar beneficiar){
+        Authentication authentication = authenticationFacade.getAuthentication();
+        Utilizator utilizator = utilizatorService.findUtilizatorByEmail(authentication.getName());
+        beneficiar.setId_utilizator(utilizator.getId());
+        beneficiarService.save(beneficiar);
+
+        return "redirect:/home";
     }
 }

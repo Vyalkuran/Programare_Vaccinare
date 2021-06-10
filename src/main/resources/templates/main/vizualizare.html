@@ -19,6 +19,9 @@
         <p th:text="${oras.denumire_oras}" th:if="${centru_vaccinare?.id_oras} == ${oras.id} and ${centru_vaccinare?.id} == ${programare?.id_centru} and ${centru_vaccinare?.id} == ${programare?.id_centru} and ${programare?.id_beneficiar} == ${beneficiar?.id} "></p>
       </div>
     </div>
+    <form th:action="@{/programare/anulare}" th:object="${programare}" method="DELETE" th:if="${programare?.id_beneficiar} == ${beneficiar?.id}">
+      <button type="submit" class="btn btn-success">Anulare programare</button>
+    </form>
   </div>
   <br>
   <br>

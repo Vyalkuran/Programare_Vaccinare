@@ -20,4 +20,9 @@ public class ProgramareServiceImpl implements ProgramareService{
     public Programare findProgramareById_beneficiar(int id_beneficiar) {
         return programareRepository.findProgramareById_beneficiar(id_beneficiar);
     }
+
+    @Override
+    public Programare deleteProgramareById(int id) {
+        return programareRepository.deleteProgramareById(id);
+    }
 }
