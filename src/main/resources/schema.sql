@@ -76,10 +76,7 @@ CREATE TABLE CENTRE_VACCINARE (
 
 CREATE TABLE PROGRAMARI (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    ziua VARCHAR(250) not null,
-    data_zi INT not null,
-    data_luna INT not null,
-    data_an INT not null,
+    data_programare TIMESTAMP NOT NULL,
     id_centru INT not null,
     id_beneficiar INT not null
 );

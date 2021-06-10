@@ -1,7 +1,5 @@
 package com.programarevaccinnare.programare_vaccinare.controller;
 
-import com.programarevaccinnare.programare_vaccinare.entity.Beneficiar;
-import com.programarevaccinnare.programare_vaccinare.entity.Utilizator;
 import com.programarevaccinnare.programare_vaccinare.facade.AuthenticationFacade;
 import com.programarevaccinnare.programare_vaccinare.service.BeneficiarService;
 import com.programarevaccinnare.programare_vaccinare.service.UtilizatorService;
@@ -13,8 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Controller
 public class HomeController {
@@ -35,10 +31,10 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(Model model){
-        Authentication authentication = authenticationFacade.getAuthentication();
-        Utilizator u = utilizatorService.findUtilizatorByEmail(authentication.getName());
-        List<Beneficiar> beneficiari = beneficiarService.findBeneficiariById_utilizator(u.getId());
-        model.addAttribute("beneficiari", beneficiari);
+//        Authentication authentication = authenticationFacade.getAuthentication();
+//        Utilizator u = utilizatorService.findUtilizatorByEmail(authentication.getName());
+//        List<Beneficiar> beneficiari = beneficiarService.findBeneficiariById_utilizator(u.getId());
+//        model.addAttribute("beneficiari", beneficiari);
 
         return "main/home";
     }

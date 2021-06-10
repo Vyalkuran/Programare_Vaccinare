@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "PROGRAMARI")
@@ -20,17 +22,10 @@ public class Programare {
     @Column(name="id")
     private int id;
 
-    @Column(name="ziua")
-    private String ziua;
-
-    @Column(name="data_zi")
-    private int data_zi;
-
-    @Column(name="data_luna")
-    private int data_luna;
-
-    @Column(name="data_an")
-    private int data_an;
+    @Column(name = "data_programare")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private Calendar data_programare;
 
     @Column(name="id_centru")
     private int id_centru;
@@ -38,11 +33,8 @@ public class Programare {
     @Column(name="id_beneficiar")
     private int id_beneficiar;
 
-    public Programare(String ziua, int data_zi, int data_luna, int data_an, int id_centru, int id_beneficiar) {
-        this.ziua = ziua;
-        this.data_zi = data_zi;
-        this.data_luna = data_luna;
-        this.data_an = data_an;
+    public Programare(Calendar data_programare, int id_centru, int id_beneficiar) {
+        this.data_programare = data_programare;
         this.id_centru = id_centru;
         this.id_beneficiar = id_beneficiar;
     }

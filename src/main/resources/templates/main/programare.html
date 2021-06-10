@@ -10,7 +10,7 @@
 <form th:action="@{/programare/save}" th:object="${programare}" method="POST">
   <div class="form-group">
     <label for="datetime">Data programarii:</label>
-    <input type="datetime-local" th:field="${dataProgramare}" id="datetime">
+    <input type="datetime-local" th:field="*{data_programare}" id="datetime">
   </div>
   <div class="form-group">
     <label for="oras">Oras:</label>
@@ -30,7 +30,7 @@
   </div>
   <div class="form-group">
     <label for="beneficiar">Beneficiar:</label>
-    <select th:field="${beneficiari}" name="beneficiar" id="beneficiar">
+    <select th:field="*{id_beneficiar}" name="beneficiar" id="beneficiar">
       <option value="0">Select</option>
       <option th:each="beneficiar : ${beneficiari}" th:value="${beneficiar.getId()}" th:text="${beneficiar.nume} + ' ' + ${beneficiar.prenume}">
       </option>
