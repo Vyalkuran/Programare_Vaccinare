@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -53,5 +54,17 @@ public class BeneficiarController {
         model.addAttribute("centre_vaccinare", centreVaccinare);
         model.addAttribute("orase", orase);
         return "main/vizualizare";
+    }
+
+    @GetMapping("/beneficiari/adaugare")
+    public String adaugareBeneficiar(Model model){
+        Beneficiar beneficiar = new Beneficiar();
+        model.addAttribute("beneficiar", beneficiar);
+        return "main/adaugare";
+    }
+
+    @PostMapping("/beneficiari/adaugare/save")
+    public String createNewBeneficiar(){
+        return null;
     }
 }
