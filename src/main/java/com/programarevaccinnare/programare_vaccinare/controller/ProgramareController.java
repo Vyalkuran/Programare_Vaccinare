@@ -1,6 +1,5 @@
 package com.programarevaccinnare.programare_vaccinare.controller;
 
-import com.programarevaccinnare.programare_vaccinare.email.Email;
 import com.programarevaccinnare.programare_vaccinare.email.MailSender;
 import com.programarevaccinnare.programare_vaccinare.email.SMTPEmailProvider;
 import com.programarevaccinnare.programare_vaccinare.entity.*;
@@ -70,12 +69,14 @@ public class ProgramareController {
         Beneficiar beneficiar = beneficiarService.findBeneficiarById(programare.getId_beneficiar());
         CentruVaccinare centruVaccinare = centruVaccinareService.findCentruVaccinareById(programare.getId_centru());
         MailSender sender = new MailSender(new SMTPEmailProvider());
-        Email email = Email.getInstance();
-        email.setTo(beneficiar.getEmail());
-        email.setSubject("Inregistrare programare");
-        email.setBody("La data " + programare.getData_programare().getTime() + " beneficiarul " + beneficiar.getNume() + " " + beneficiar.getPrenume() + " s-a programat la vaccinare "
-                + " la centrul de vaccinare " + centruVaccinare.getDenumire_centru_vaccinare());
-        email.setCc("");
-        sender.sendEmail(email);
+        String mesaj = "La data " + programare.getData_programare().getTime() + " beneficiarul " + beneficiar.getNume() + " " + beneficiar.getPrenume() + " s-a programat la vaccinare "
+                + " la centrul de vaccinare " + centruVaccinare.getDenumire_centru_vaccinare();
+        String subiect = "Inregistrare programare";
+//        email.setTo(beneficiar.getEmail());
+//        email.setSubject("Inregistrare programare");
+//        email.setBody("La data " + programare.getData_programare().getTime() + " beneficiarul " + beneficiar.getNume() + " " + beneficiar.getPrenume() + " s-a programat la vaccinare "
+//                + " la centrul de vaccinare " + centruVaccinare.getDenumire_centru_vaccinare());
+//        email.setCc("");
+        sender.sendEmail(beneficiar, centruVaccinare, subiect, mesaj);
     }
 }

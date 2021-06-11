@@ -1,5 +1,8 @@
 package com.programarevaccinnare.programare_vaccinare.email;
 
+import com.programarevaccinnare.programare_vaccinare.entity.Beneficiar;
+import com.programarevaccinnare.programare_vaccinare.entity.CentruVaccinare;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -10,8 +13,8 @@ public class SMTPEmailProvider implements EmailProvider{
     private String host = "smtp.gmail.com";
 
     @Override
-    public void sendEmail(Email email) {
-        email.setFrom(from);
+    public void sendEmail(Beneficiar beneficiar, CentruVaccinare centruVaccinare, String subiect, String mesaj) {
+        Email email = new Email.EmailBuilder(beneficiar.getEmail(), from, subiect, mesaj).build();
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", "465");
