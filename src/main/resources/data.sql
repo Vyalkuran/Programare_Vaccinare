@@ -1,4 +1,4 @@
-INSERT INTO UTILIZATORI (email, parola) VALUES ('alexsebastian2006@yahoo.com', 'Vaccinnare80$'),
+INSERT INTO UTILIZATORI (email, parola) VALUES ('alexsebastian20068080@yahoo.com', 'Vaccinnare80$'),
                                                ('seinescuraluca@gmail.com', 'Pfizer$20');
 
 INSERT INTO AUTORITATI (utilizator_id, autoritate) values (1, 'UTILIZATOR_CREAT');

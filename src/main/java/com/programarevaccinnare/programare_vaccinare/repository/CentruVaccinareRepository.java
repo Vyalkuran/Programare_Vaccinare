@@ -16,4 +16,7 @@ public interface CentruVaccinareRepository extends JpaRepository<CentruVaccinare
 
     @Query("select cv from CentruVaccinare cv where cv.id_oras = :id_oras")
     public List<CentruVaccinare> findCentruVaccinareById_oras(@Param("id_oras") int id_oras);
+
+    @Query("select cv from CentruVaccinare cv where cv.id = :id")
+    public CentruVaccinare findCentruVaccinareById(@Param("id") int id);
 }

@@ -27,4 +27,9 @@ public class BeneficiarServiceImpl implements BeneficiarService{
     public List<Beneficiar> findBeneficiariById_utilizator(int id_utilizator) {
         return beneficiarRepository.findBeneficiariById_utilizator(id_utilizator);
     }
+
+    @Override
+    public Beneficiar findBeneficiarById(int id) {
+        return beneficiarRepository.findBeneficiarById(id);
+    }
 }

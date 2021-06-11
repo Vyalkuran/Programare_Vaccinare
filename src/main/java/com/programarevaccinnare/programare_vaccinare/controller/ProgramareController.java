@@ -1,15 +1,12 @@
 package com.programarevaccinnare.programare_vaccinare.controller;
 
-import com.programarevaccinnare.programare_vaccinare.entity.Beneficiar;
-import com.programarevaccinnare.programare_vaccinare.entity.Oras;
-import com.programarevaccinnare.programare_vaccinare.entity.Programare;
-import com.programarevaccinnare.programare_vaccinare.entity.Utilizator;
+import com.programarevaccinnare.programare_vaccinare.email.Email;
+import com.programarevaccinnare.programare_vaccinare.email.MailSender;
+import com.programarevaccinnare.programare_vaccinare.email.SMTPEmailProvider;
+import com.programarevaccinnare.programare_vaccinare.entity.*;
 import com.programarevaccinnare.programare_vaccinare.facade.AuthenticationFacade;
 import com.programarevaccinnare.programare_vaccinare.repository.CentruVaccinareRepository;
-import com.programarevaccinnare.programare_vaccinare.service.BeneficiarService;
-import com.programarevaccinnare.programare_vaccinare.service.OrasService;
-import com.programarevaccinnare.programare_vaccinare.service.ProgramareService;
-import com.programarevaccinnare.programare_vaccinare.service.UtilizatorService;
+import com.programarevaccinnare.programare_vaccinare.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -39,6 +36,9 @@ public class ProgramareController {
     @Autowired
     ProgramareService programareService;
 
+    @Autowired
+    CentruVaccinareService centruVaccinareService;
+
     @GetMapping("/programare")
     public String programare(Model model){
         Programare programare = new Programare();
@@ -54,6 +54,8 @@ public class ProgramareController {
 
     @PostMapping("/programare/save")
     public String createNewProgramare(Programare programare){
+
+        sendEmailProgramare(programare);
         programareService.save(programare);
         return "redirect:/home";
     }
@@ -62,5 +64,18 @@ public class ProgramareController {
     public String deleteProgramare(@PathVariable("id") int id){
         programareService.deleteProgramareById(id);
         return "redirect:/beneficiari";
+    }
+
+    private void sendEmailProgramare(Programare programare) {
+        Beneficiar beneficiar = beneficiarService.findBeneficiarById(programare.getId_beneficiar());
+        CentruVaccinare centruVaccinare = centruVaccinareService.findCentruVaccinareById(programare.getId_centru());
+        MailSender sender = new MailSender(new SMTPEmailProvider());
+        Email email = Email.getInstance();
+        email.setTo(beneficiar.getEmail());
+        email.setSubject("Inregistrare programare");
+        email.setBody("La data " + programare.getData_programare().getTime() + " beneficiarul " + beneficiar.getNume() + " " + beneficiar.getPrenume() + " s-a programat la vaccinare "
+                + " la centrul de vaccinare " + centruVaccinare.getDenumire_centru_vaccinare());
+        email.setCc("");
+        sender.sendEmail(email);
     }
 }

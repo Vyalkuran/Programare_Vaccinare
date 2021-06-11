@@ -10,4 +10,6 @@ public interface BeneficiarService {
     public List<Beneficiar> findAll();
 
     public List<Beneficiar> findBeneficiariById_utilizator(int id_utilizator);
+
+    public Beneficiar findBeneficiarById(int id);
 }

@@ -16,4 +16,7 @@ public interface BeneficiarRepository extends JpaRepository<Beneficiar, Integer>
 
     @Query("select b from Beneficiar b where b.id_utilizator = :id_utilizator")
     public List<Beneficiar> findBeneficiariById_utilizator(@Param("id_utilizator") int id_utilizator);
+
+    @Query("select b from Beneficiar b where b.id = :id")
+    public Beneficiar findBeneficiarById(@Param("id") int id);
 }
