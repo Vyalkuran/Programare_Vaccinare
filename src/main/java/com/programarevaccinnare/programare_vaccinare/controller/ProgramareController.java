@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -60,9 +58,9 @@ public class ProgramareController {
         return "redirect:/home";
     }
 
-    @DeleteMapping("/programare/anulare")
-    public String deleteProgramare(Programare programare){
-        programareService.deleteProgramareById(programare.getId());
-        return "redirect:/programare";
+    @RequestMapping(value="/programare/anulare/{id}", method=RequestMethod.POST)
+    public String deleteProgramare(@PathVariable("id") int id){
+        programareService.deleteProgramareById(id);
+        return "redirect:/beneficiari";
     }
 }

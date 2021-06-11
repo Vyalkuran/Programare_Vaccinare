@@ -22,7 +22,7 @@ public class ProgramareServiceImpl implements ProgramareService{
     }
 
     @Override
-    public Programare deleteProgramareById(int id) {
-        return programareRepository.deleteProgramareById(id);
+    public void deleteProgramareById(int id) {
+        programareRepository.deleteProgramareById(id);
     }
 }
